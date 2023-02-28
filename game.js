@@ -39,7 +39,7 @@ let acceleration = 0.2;
 
 
 //CHANGE TO TRUE TO ACTIAVTE GAME
-let isGameActive = false;
+let isGameActive = true;
 
 function draw() {
     clear();
@@ -56,7 +56,7 @@ function draw() {
           velocity = velocity - 0.8;
         }
       
-        if (y > 1200 && velocity <= 1) {
+        if (y > 1200 && velocity <= 2) {
           isGameActive = false;
         }
         if (y > 1200 && velocity >= 2){
@@ -64,6 +64,8 @@ function draw() {
         }
       }
 }
+  
+
 
 
 
