@@ -85,10 +85,22 @@ function resultLose () {
 function gameOn () {
 }
 
+//basket
+let basketX = random(50, 750);
+let basketY = 650;
+
+function basket (){
+push();
+fill(100,100,100,200);
+rect(basketX-50, basketY-50,100,50,0,0,40);
+pop();
+
+} 
 
 
 //egg (aka the lunar)
 function egg (x,y) {
+  if (state === "game") {
     push();
     scale(0.5);
     fill(220,220,170);
@@ -98,6 +110,7 @@ function egg (x,y) {
     bezierVertex(x - 100, y + 100, x - 40, y - 50, x, y - 50);
     endShape(); 
     pop();
+  }
 } 
  
 // let eggX = 400;
@@ -124,21 +137,30 @@ let state = "start";
 
 function keyPressed () {
   if (keyCode === 32 && state === "start"){
-    isGameActive = true;
     state = "game";
-  } else if (keyCode === 32 && state === "game") {
+    isGameActive = true;
+  } else if (keyCode === 32 && state === "resultWin") {
     state = "start";
+    y = -100;
+    x = 800;
+    redraw(); 
+  } else if (keyCode === 32 && state === "resultLose") {
+    state = "start";
+    y = -100;
+    x = 800;
+    redraw(); 
   }
 }
 
 function draw() {
     scenery();
     egg(x,y);
+    basket();
     if (state === "start"){
       startScreen();
       isGameActive = false;
     }
-
+ 
     //egg movement
     if (isGameActive === true) {
         y = y + velocity; 
@@ -155,37 +177,32 @@ function draw() {
         }
       }
 
-    if (y > 1200 && velocity <= 1.5 && state === "game") {
+    if (y > 1200 && velocity <= 2) {
+      state = "resultWin";
       isGameActive = false;
       resultWin();
       }
 
-    if (y > 1200 && velocity >= 1.5 && state === "game"){
+    if (y > 1200 && velocity >= 2){
+      state = "resultLose";
       isGameActive = false;
       resultLose();
       push();
       fill(255);
       ellipse(x/2,620,50);
       pop();
-      } 
+      }
 }   
 
-   
- 
-//use of placement of basket
-//the normal way of saying random
-const randomNumber = Math.floor(Math.random() * 100);
-// the p5 way of saying random
-random([min], [max]);
 
 /*
 to do:
-- start screen
-- end screen
+- corecct text on all screens
 - broken egg
+- basket
 
 extra
 - grass detail
 - more details to hen coop
-- sun
+- sun?
 */
