@@ -39,24 +39,29 @@ function startScreen () {
   push();
   fill(220,220,170);
   rect(100,150,600,300,30);
+  rect(250, 605, 300,70, 10);
   pop();
 
   button(200, 300, -90);
   button(400, 300, 0);
   button(600, 300, 90);
 
-  
+  push();
   textSize(40);
   text("CONTROLS:", 290, 210);
-  //text("MAKE THE EGG LAND SOFTLY \n      IN THE BASKET TO WIN!", 100,500);
+  text("MAKE THE EGG LAND SOFTLY \n      IN THE BASKET TO WIN!", 100,500);
+  pop();
 
-  
+  push();
   textSize(30);
   textStyle(NORMAL);
   text("move left", 140, 400);
   text("move up", 345, 400);
   text("move right", 530, 400);
-
+  textAlign(CENTER);
+  text("Press space to start", 400, 650);
+  pop();
+ 
 }
 
 //result WIN
@@ -65,11 +70,18 @@ function resultWin () {
   push();
   fill(220,220,170);
   rect(100,150,600,300,30); 
-  pop();
+  push();
   fill(0);
-  text("YOU SAVED THE EGG!!", 400, 200);
-}
+  textSize(40);
+  textStyle(BOLD);
+  textAlign(CENTER);
+  text("YOU SAVED THE \n EGG! :D", 400, 250);
 
+  textSize(30);
+  textStyle(NORMAL);
+  text("Press space to play again", 400, 400);
+  pop();
+}
 //result LOSE
 function resultLose () {
   egg();
@@ -77,12 +89,18 @@ function resultLose () {
   fill(220,220,170);
   rect(100,150,600,300,30);
   pop();
-  fill(0);
-  text("YOU CRACKED THE EGG!!", 400, 200);
-}
 
-//game ON
-function gameOn () {
+  push();
+  fill(0);
+  textSize(40);
+  textStyle(BOLD);
+  textAlign(CENTER);
+  text("YOU CRACKED THE \n EGG!! :(", 400, 250);
+
+  textSize(30);
+  textStyle(NORMAL);
+  text("Press space to try again", 400, 400);
+  pop();
 }
 
 //basket
@@ -111,18 +129,28 @@ function egg (x,y) {
     endShape(); 
     pop();
   }
-} 
- 
-// let eggX = 400;
-// let eggY = 500;
+}
 
-// //cracked egg
-// function brokenEgg (eggX,eggY) {
-//   push();
-//   fill(255);
-//   ellipse(eggX,eggY, 50,50);
-//   pop();
-// }
+// broken egg
+function brokenEgg (bX,bY) {
+  push();
+  fill(255);
+  beginShape();
+  vertex(bX+5, bY-20);
+  bezierVertex(bX+25,bY-20,bX+25,bY-5,bX+35,bY-5);
+  bezierVertex(bX+40,bY-4,bX+70,bY-15,bX+75,bY);
+  bezierVertex(bX+80,bY+15,bX+35,bY+10,bX+30,bY+15);
+  bezierVertex(bX+25,bY+20,bX+45,bY+20,bX+45,bY+25);
+  bezierVertex(bX+45,bY+30,bX-5,bY+40,bX-30,bY+25);
+  bezierVertex(bX-35,bY+15,bX-10,bY+15,bX-40,bY+10);
+  bezierVertex(bX-70,bY+10,bX-50,bY-10,bX-40,bY-10);
+  bezierVertex(bX,bY-10,bX-30,bY-20,bX+5,bY-20);
+  endShape();
+
+  fill(245, 215, 66);
+  ellipse(bX,bY+2,50,20);
+  pop();
+}
 
 let y = -100;
 let x = 800;
@@ -130,8 +158,6 @@ let x = 800;
 let velocity = 1;
 let acceleration = 0.2;
 
-
-//CHANGE TO TRUE TO ACTIAVTE GAME
 let isGameActive = false; 
 let state = "start";
 
@@ -143,15 +169,20 @@ function keyPressed () {
     state = "start";
     y = -100;
     x = 800;
+    velocity = 1;
+    acceleration = 0.2;
     redraw(); 
   } else if (keyCode === 32 && state === "resultLose") {
     state = "start";
     y = -100;
     x = 800;
+    velocity = 1;
+    acceleration = 0.2;
     redraw(); 
   }
 }
 
+//THE GAME IN ACTION
 function draw() {
     scenery();
     egg(x,y);
@@ -160,7 +191,7 @@ function draw() {
       startScreen();
       isGameActive = false;
     }
- 
+
     //egg movement
     if (isGameActive === true) {
         y = y + velocity; 
@@ -187,22 +218,17 @@ function draw() {
       state = "resultLose";
       isGameActive = false;
       resultLose();
-      push();
-      fill(255);
-      ellipse(x/2,620,50);
-      pop();
+      brokenEgg(x/2,623);
       }
 }   
 
 
 /*
 to do:
-- corecct text on all screens
-- broken egg
-- basket
+- particles (look at video)
+- land in basket, make it work
 
 extra
-- grass detail
+- grass detail (use array, might be annoying)
 - more details to hen coop
-- sun?
 */
