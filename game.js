@@ -5,6 +5,7 @@ function scenery () {
   fill(160, 204, 84);
   rect(0, 600, width, 200);
 
+  //hen coop
   fill(105, 67, 44);
   rect(50,440,150,120);
   triangle(50,440,200,440,125,390);
@@ -12,6 +13,22 @@ function scenery () {
   rect(190,540,10,70);
   rect(70,540,10,60);
   rect(170,540,10,60);
+
+  let cX = 300;
+  let cY = 300;
+  //clouds
+  push();
+  fill(255);
+  ellipse(cX+50,cY-30, 80);
+  ellipse(cX+70,cY+20, 80);
+  
+  ellipse(cX,cY, 80);
+  ellipse(cX,cY, 80);
+  ellipse(cX,cY, 80);
+  ellipse(cX,cY, 80);
+  ellipse(cX,cY, 80);
+  pop();
+
 } 
 
 // button controls
@@ -107,7 +124,8 @@ function resultLose () {
 }
 
 //basket
-let basketX = random(50, 750);
+// let basketX = random(50, 750);
+let basketX = 300;
 let basketY = 650;
 
 function basket() {
@@ -220,6 +238,10 @@ function draw() {
   if (state === "start"){
     startScreen();
     isGameActive = false;
+
+    //REMOVE WHEN DONE
+    scenery();
+
   }
   //egg movement
   if (isGameActive === true) {
@@ -235,13 +257,25 @@ function draw() {
         x = x + 3;
       }
     }
+
     //lose or win
-    if (y > 1200 && velocity <= 2 && x <= basketX+25 && x >= basketX-25) {
+
+    // win when speed is slow and x is smaller that right side of basket AND bigger than right side
+    if (y > 1200 && velocity < 2 && x/2 < basketX+25 && x/2 > basketX-25) {
       state = "resultWin";
       isGameActive = false;
       resultWin();
       happyEgg(x,y);
-    } else if (y > 1200 && velocity >= 2 && x <= basketX-25 && x >= basketX+25){
+
+    //lose when speed is slow and x is smaller than left side of basket AND bigger than left side
+    } else if (y > 1200 && velocity < 2 && x/2 < basketX-25 && x/2 > basketX+25) {
+      state = "resultLose";
+      isGameActive = false;
+      resultLose();
+      brokenEgg(x/2,(y/2)+15);
+
+    //makes game lose when going to fast (cause only using else would include when egg is at a higher y, and then you'd lose directly)
+    } else if (y > 1200 && velocity > 2) {
       state = "resultLose";
       isGameActive = false;
       resultLose();
@@ -250,10 +284,11 @@ function draw() {
 }  
 
 
+
 /*
 to do: 
 - particles (look at video)
-- land in basket, make it work
+- add to html (look at video)
 
 extra
 - grass detail (use array, might be annoying)
