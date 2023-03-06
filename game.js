@@ -5,6 +5,14 @@ function scenery () {
   fill(160, 204, 84);
   rect(0, 600, width, 200);
 
+  //grass spikes
+  let tX = 0;
+ 
+  while (tX < width) {
+    triangle(tX, 600, tX +20, 590, tX +40, 600);
+    tX = tX + 40;
+  }
+
   //hen coop
   fill(105, 67, 44);
   rect(50,440,150,120);
@@ -13,23 +21,32 @@ function scenery () {
   rect(190,540,10,70);
   rect(70,540,10,60);
   rect(170,540,10,60);
-
-  let cX = 300;
-  let cY = 300;
-  //clouds
   push();
-  fill(255);
-  ellipse(cX+50,cY-30, 80);
-  ellipse(cX+70,cY+20, 80);
-  
-  ellipse(cX,cY, 80);
-  ellipse(cX,cY, 80);
-  ellipse(cX,cY, 80);
-  ellipse(cX,cY, 80);
-  ellipse(cX,cY, 80);
+  fill(0);
+  rect(100,510, 50);
   pop();
 
+
+  //clouds
+  let cX = 300;
+  let cY = 300;
+  
+  push();
+  fill(255);
+  ellipse(cX+50,cY-10, 110,100);
+  ellipse(cX+90,cY+50,120,110);
+  ellipse(cX,cY+30,130,120);
+  
+  ellipse(cX-200,cY-200,110,100);
+  ellipse(cX-250,cY-220,110,100);
+  
+  
+  ellipse(cX+300,cY-50,120,110);
+  ellipse(cX+350,cY-80,110,100);
+  
+  pop();
 } 
+
 
 // button controls
 function button (buttonX, buttonY,rotateButton) {
@@ -238,11 +255,8 @@ function draw() {
   if (state === "start"){
     startScreen();
     isGameActive = false;
-
-    //REMOVE WHEN DONE
-    scenery();
-
   }
+
   //egg movement
   if (isGameActive === true) {
     y = y + velocity; 
@@ -289,9 +303,6 @@ function draw() {
 to do: 
 - particles (look at video)
 - add to html (look at video)
+- upload planning document to github
 
-extra
-- grass detail (use array, might be annoying)
-- more details to hen coop
-- just in general make scenery prettier
 */ 
