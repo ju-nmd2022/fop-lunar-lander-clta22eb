@@ -1,6 +1,12 @@
-noStroke();
+//html setup
+function setup(){
+  createCanvas(800,700);
+  frameRate(30);
+}
+
 //background
 function scenery () {
+  noStroke();
   background(140, 216, 237);
   fill(160, 204, 84);
   rect(0, 600, width, 200);
@@ -36,17 +42,12 @@ function scenery () {
   ellipse(cX+50,cY-10, 110,100);
   ellipse(cX+90,cY+50,120,110);
   ellipse(cX,cY+30,130,120);
-  
   ellipse(cX-200,cY-200,110,100);
   ellipse(cX-250,cY-220,110,100);
-  
-  
   ellipse(cX+300,cY-50,120,110);
   ellipse(cX+350,cY-80,110,100);
-  
   pop();
 } 
-
 
 // button controls
 function button (buttonX, buttonY,rotateButton) {
@@ -61,99 +62,18 @@ function button (buttonX, buttonY,rotateButton) {
   pop();
 }
 
-//STARTSCREEN
-function startScreen () {
-  scenery();
-  egg(x,y);
-  //game name
-  fill(0);
-  textStyle(BOLD);
-  textSize(64);
-  text("THE EGG HERO 2.0",100,100);
-  //rectangle
-  push();
-  fill(220,220,170);
-  rect(100,150,600,300,30);
-  rect(250, 605, 300,70, 10);
-  pop();
-  //controls
-  button(200, 300, -90);
-  button(400, 300, 0);
-  button(600, 300, 90);
-
-  //text instructions
-  push();
-  textSize(40);
-  text("CONTROLS:", 290, 210);
-  text("MAKE THE EGG LAND SOFTLY \n      IN THE BASKET TO WIN!", 100,500);
-  pop();
-
-  push();
-  textSize(30);
-  textStyle(NORMAL);
-  text("move left", 140, 400);
-  text("move up", 345, 400);
-  text("move right", 530, 400);
-  textAlign(CENTER);
-  text("Press space to start", 400, 650);
-  pop();
- 
-}
-
-//result WIN
-function resultWin () {
-  egg();
-  push();
-  fill(220,220,170);
-  rect(100,150,600,300,30); 
-  push();
-  fill(0);
-  textSize(40);
-  textStyle(BOLD);
-  textAlign(CENTER);
-  text("YOU SAVED THE \n EGG! :D", 400, 250);
-
-  textSize(30);
-  textStyle(NORMAL);
-  text("Press space to play again", 400, 400);
-  pop();
-}
-
-//result LOSE
-function resultLose () {
-  egg();
-  push();
-  fill(220,220,170);
-  rect(100,150,600,300,30);
-  pop();
-
-  push();
-  fill(0);
-  textSize(40);
-  textStyle(BOLD);
-  textAlign(CENTER);
-  text("YOU CRACKED THE \n EGG!! :(", 400, 250);
-
-  textSize(30);
-  textStyle(NORMAL);
-  text("Press space to try again", 400, 400);
-  pop();
-}
-
 //basket
-// let basketX = random(50, 750);
 let basketX = 300;
 let basketY = 650;
 
 function basket() {
   push();
-  fill(100,100,100,200);
-  rect(basketX-50, basketY-50,100,50,0,0,40);
+  fill(105, 67, 44,200);
+  rect(basketX-50, basketY-50,100,80,0,0,40);
   pop();
 } 
 
-
-//egg (aka the lunar)
+//EGG (aka the lunar lander)
 function egg (x,y) {
   if (state === "game") {
     push();
@@ -168,7 +88,7 @@ function egg (x,y) {
   }
 }
 
-// broken egg
+//losing egg
 function brokenEgg (bX,bY) {
   //white
   push();
@@ -190,6 +110,7 @@ function brokenEgg (bX,bY) {
   pop();
 }
 
+//winning egg
 function happyEgg (hX,hY) {
   push();
   scale(0.5);
@@ -215,19 +136,95 @@ function happyEgg (hX,hY) {
   pop();
 }
 
-//variables
+//STARTSCREEN
+function startScreen () {
+  scenery();
+  egg(x,y);
+  //game name
+  fill(0);
+  textStyle(BOLD);
+  textSize(64);
+  text("THE EGG HERO 2.0",100,100);
+  //rectangle
+  push();
+  fill(220,220,170);
+  rect(100,150,600,300,30);
+  rect(250, 605, 300,70, 10);
+  pop();
+  //controls
+  button(200, 300, -90);
+  button(400, 300, 0);
+  button(600, 300, 90);
+  //text instructions
+  push();
+  textSize(40);
+  text("CONTROLS:", 290, 210);
+  text("MAKE THE EGG LAND SOFTLY \n      IN THE BASKET TO WIN!", 100,500);
+  pop();
+
+  push();
+  textSize(30);
+  textStyle(NORMAL);
+  text("move left", 140, 400);
+  text("move up", 345, 400);
+  text("move right", 530, 400);
+  textAlign(CENTER);
+  text("Press space to start", 400, 650);
+  pop();
+}
+
+//result WIN
+function resultWin () {
+  push();
+  fill(220,220,170);
+  rect(100,150,600,300,30);
+  pop();
+
+  push();
+  fill(0);
+  textSize(40);
+  textStyle(BOLD);
+  textAlign(CENTER);
+  text("YOU SAVED THE \n EGG! :D", 400, 250);
+  textSize(30);
+  textStyle(NORMAL);
+  text("Press space to play again", 400, 400);
+  pop();
+}
+
+//result LOSE
+function resultLose() {
+  push();
+  fill(220,220,170);
+  rect(100,150,600,300,30);
+  pop();
+
+  push();
+  fill(0);
+  textSize(40);
+  textStyle(BOLD);
+  textAlign(CENTER);
+  text("YOU CRACKED THE \n EGG!! :(", 400, 250);
+  textSize(30);
+  textStyle(NORMAL);
+  text("Press space to try again", 400, 400);
+  pop();
+}
+
+//variables for egg
 let y = -100;
 let x = 800;
 
 let velocity = 1;
 let acceleration = 0.2;
 
+//for screen changes
 let isGameActive = false; 
 let state = "start";
 
 //spacebar functions (making the game being able to loop)
 function keyPressed () {
-  if (keyCode === 32 && state === "start"){
+  if (keyCode === 32 && state === "start") {
     state = "game";
     isGameActive = true;
   } else if (keyCode === 32 && state === "resultWin") {
@@ -274,35 +271,31 @@ function draw() {
 
     //lose or win
 
-    // win when speed is slow and x is smaller that right side of basket AND bigger than right side
-    if (y > 1200 && velocity < 2 && x/2 < basketX+25 && x/2 > basketX-25) {
+    //win when speed is slow and x is smaller that right side of basket AND bigger than right side
+    if (y > 1200 && velocity < 2.5 && x/2 < basketX+25 && x/2 > basketX-25) {
       state = "resultWin";
       isGameActive = false;
       resultWin();
       happyEgg(x,y);
 
     //lose when speed is slow and x is smaller than left side of basket AND bigger than left side
-    } else if (y > 1200 && velocity < 2 && x/2 < basketX-25 && x/2 > basketX+25) {
+    } else if (y > 1200 && velocity < 2.5 && x/2 < basketX-25 && x/2 > basketX+25) {
       state = "resultLose";
       isGameActive = false;
       resultLose();
       brokenEgg(x/2,(y/2)+15);
 
     //makes game lose when going to fast (cause only using else would include when egg is at a higher y, and then you'd lose directly)
-    } else if (y > 1200 && velocity > 2) {
+    } else if (y > 1200 && velocity > 2.5) {
       state = "resultLose";
       isGameActive = false;
       resultLose();
       brokenEgg(x/2,(y/2)+15);
     }
-}  
-
-
+}
 
 /*
 to do: 
-- particles (look at video)
-- add to html (look at video)
 - upload planning document to github
 
 */ 
