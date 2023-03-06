@@ -1,5 +1,5 @@
 noStroke();
-
+//background
 function scenery () {
   background(140, 216, 237);
   fill(160, 204, 84);
@@ -31,21 +31,23 @@ function button (buttonX, buttonY,rotateButton) {
 function startScreen () {
   scenery();
   egg(x,y);
+  //game name
   fill(0);
   textStyle(BOLD);
   textSize(64);
   text("THE EGG HERO 2.0",100,100);
-
+  //rectangle
   push();
   fill(220,220,170);
   rect(100,150,600,300,30);
   rect(250, 605, 300,70, 10);
   pop();
-
+  //controls
   button(200, 300, -90);
   button(400, 300, 0);
   button(600, 300, 90);
 
+  //text instructions
   push();
   textSize(40);
   text("CONTROLS:", 290, 210);
@@ -82,6 +84,7 @@ function resultWin () {
   text("Press space to play again", 400, 400);
   pop();
 }
+
 //result LOSE
 function resultLose () {
   egg();
@@ -107,12 +110,11 @@ function resultLose () {
 let basketX = random(50, 750);
 let basketY = 650;
 
-function basket (){
-push();
-fill(100,100,100,200);
-rect(basketX-50, basketY-50,100,50,0,0,40);
-pop();
-
+function basket() {
+  push();
+  fill(100,100,100,200);
+  rect(basketX-50, basketY-50,100,50,0,0,40);
+  pop();
 } 
 
 
@@ -133,6 +135,7 @@ function egg (x,y) {
 
 // broken egg
 function brokenEgg (bX,bY) {
+  //white
   push();
   fill(255);
   beginShape();
@@ -146,12 +149,38 @@ function brokenEgg (bX,bY) {
   bezierVertex(bX-70,bY+10,bX-50,bY-10,bX-40,bY-10);
   bezierVertex(bX,bY-10,bX-30,bY-20,bX+5,bY-20);
   endShape();
-
+  //yellow
   fill(245, 215, 66);
   ellipse(bX,bY+2,50,20);
   pop();
 }
 
+function happyEgg (hX,hY) {
+  push();
+  scale(0.5);
+  fill(220,220,170);
+  beginShape();
+  vertex(hX,hY-50);
+  bezierVertex(hX + 40, hY - 50, hX + 100, hY + 100, hX, hY + 100);
+  bezierVertex(hX - 100, hY + 100, hX - 40, hY - 50, hX, hY - 50);
+  endShape(); 
+  //eyes
+  stroke(0);
+  strokeCap(ROUND);
+  strokeWeight(10);
+  line(hX-15,hY, hX-15, hY+20);
+  line(hX+15,hY, hX+15, hY+20);
+  line(hX-35, hY+ 40, hX+35, hY+ 40);
+  //smile
+  noFill();
+  beginShape();
+  vertex(hX-35, hY+ 40);
+  bezierVertex(hX-30,hY+90,hX+30,hY+90,hX+35,hY+40);
+  endShape();
+  pop();
+}
+
+//variables
 let y = -100;
 let x = 800;
 
@@ -161,6 +190,7 @@ let acceleration = 0.2;
 let isGameActive = false; 
 let state = "start";
 
+//spacebar functions (making the game being able to loop)
 function keyPressed () {
   if (keyCode === 32 && state === "start"){
     state = "game";
@@ -171,64 +201,62 @@ function keyPressed () {
     x = 800;
     velocity = 1;
     acceleration = 0.2;
-    redraw(); 
+    basketX = random(50, 750);
   } else if (keyCode === 32 && state === "resultLose") {
     state = "start";
     y = -100;
     x = 800;
     velocity = 1;
     acceleration = 0.2;
-    redraw(); 
+    basketX = random(50, 750);
   }
 }
 
 //THE GAME IN ACTION
 function draw() {
-    scenery();
-    egg(x,y);
-    basket();
-    if (state === "start"){
-      startScreen();
-      isGameActive = false;
-    }
-
-    //egg movement
-    if (isGameActive === true) {
-        y = y + velocity; 
-        velocity = velocity + acceleration;
+  scenery();
+  egg(x,y);
+  basket();
+  if (state === "start"){
+    startScreen();
+    isGameActive = false;
+  }
+  //egg movement
+  if (isGameActive === true) {
+    y = y + velocity; 
+    velocity = velocity + acceleration;
     
-        if (keyIsDown(38)) {
-          velocity = velocity - 0.8;
-        }
-        if (keyIsDown(37)) {
-          x = x - 3;
-        }
-        if (keyIsDown(39)) {
-          x = x + 3;
-        }
+    //moving the egg sideways
+    if (keyIsDown(38)) {
+      velocity = velocity - 0.8;
+      } else if (keyIsDown(37)) {
+        x = x - 3;
+      } else if (keyIsDown(39)) {
+        x = x + 3;
       }
-
-    if (y > 1200 && velocity <= 2) {
+    }
+    //lose or win
+    if (y > 1200 && velocity <= 2 && x <= basketX+25 && x >= basketX-25) {
       state = "resultWin";
       isGameActive = false;
       resultWin();
-      }
-
-    if (y > 1200 && velocity >= 2){
+      happyEgg(x,y);
+    } else if (y > 1200 && velocity >= 2 && x <= basketX-25 && x >= basketX+25){
       state = "resultLose";
       isGameActive = false;
       resultLose();
-      brokenEgg(x/2,623);
-      }
-}   
+      brokenEgg(x/2,(y/2)+15);
+    }
+}  
 
 
 /*
-to do:
+to do: 
 - particles (look at video)
 - land in basket, make it work
 
 extra
 - grass detail (use array, might be annoying)
 - more details to hen coop
-*/
+- just in general make scenery prettier
+*/ 
