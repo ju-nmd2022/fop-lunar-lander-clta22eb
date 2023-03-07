@@ -1,6 +1,6 @@
 //html setup
 function setup(){
-  createCanvas(800,700);
+  createCanvas(800,800);
   frameRate(30);
 }
 
