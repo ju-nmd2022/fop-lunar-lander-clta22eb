@@ -5,7 +5,7 @@ function setup(){
 }
 
 //background
-function scenery () {
+function scenery() {
   noStroke();
   background(140, 216, 237);
   fill(160, 204, 84);
@@ -242,7 +242,7 @@ function keyPressed () {
     acceleration = 0.2;
     basketX = random(50, 750);
   }
-}
+} 
 
 //THE GAME IN ACTION
 function draw() {
@@ -269,33 +269,27 @@ function draw() {
       }
     }
 
-    //lose or win
+  //lose or win
 
-    //win when speed is slow and x is smaller that right side of basket AND bigger than right side
-    if (y > 1200 && velocity < 2.5 && x/2 < basketX+25 && x/2 > basketX-25) {
-      state = "resultWin";
-      isGameActive = false;
-      resultWin();
-      happyEgg(x,y);
+  //win when speed is slow and x is smaller that right side of basket AND bigger than right side
+  if (y > 1200 && velocity < 2.5 && x/2 < basketX+25 && x/2 > basketX-25) {
+    state = "resultWin";
+    isGameActive = false;
+    resultWin();
+    happyEgg(x,y);
 
-    //lose when speed is slow and x is smaller than left side of basket AND bigger than left side
-    } else if (y > 1200 && velocity < 2.5 && x/2 < basketX-25 && x/2 > basketX+25) {
-      state = "resultLose";
-      isGameActive = false;
-      resultLose();
-      brokenEgg(x/2,(y/2)+15);
+  //lose when speed is slow and x is smaller than left side of basket AND bigger than left side
+  } else if (y > 1200 && velocity < 2.5 && x/2 < basketX-25 && x/2 > basketX+25) {
+    state = "resultLose";
+    isGameActive = false;
+    resultLose();
+    brokenEgg(x/2,(y/2)+15);
 
-    //makes game lose when going to fast (cause only using else would include when egg is at a higher y, and then you'd lose directly)
-    } else if (y > 1200 && velocity > 2.5) {
-      state = "resultLose";
-      isGameActive = false;
-      resultLose();
-      brokenEgg(x/2,(y/2)+15);
-    }
+  //makes game lose when going to fast (cause only using else would include when egg is at a higher y, and then you'd lose directly)
+  } else if (y > 1200 && velocity > 2.5) {
+    state = "resultLose";
+    isGameActive = false;
+    resultLose();
+    brokenEgg(x/2,(y/2)+15);
+  }
 }
-
-/*
-to do: 
-- upload planning document to github
-
-*/ 
